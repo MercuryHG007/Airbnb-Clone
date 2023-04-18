@@ -3,6 +3,7 @@ import { Nunito } from 'next/font/google'
 import './globals.css'
 
 import Navbar from './components/navbar/Navbar'
+import ClientOnly from './components/ClientOnly'
 
 export const metadata = {
   title: 'Mercurybnb | Holiday Homes & Apartment Rentals',
@@ -23,7 +24,15 @@ export default function RootLayout({
       <body
         className={font.className}
       >
-        <Navbar />
+        {/* 
+          ClientOnly FUNCTION SOLVES THE 
+          PURPOSE OF ELEMINATING PROBLEMS 
+          OF HYDRATION CAUSED BY CLIENT 
+          COMPONENTS.
+        */}
+        <ClientOnly>
+          <Navbar />
+        </ClientOnly>
         {children}
       </body>
     </html>
