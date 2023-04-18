@@ -2,8 +2,10 @@ import { Nunito } from 'next/font/google'
 
 import './globals.css'
 
+import Navbar from './components/navbar/Navbar'
+
 export const metadata = {
-  title: 'MercuryBNB | Holiday Homes & Apartment Rentals',
+  title: 'Mercurybnb | Holiday Homes & Apartment Rentals',
   description: 'A Airbnb clone by Mercury',
 }
 
@@ -21,6 +23,7 @@ export default function RootLayout({
       <body
         className={font.className}
       >
+        <Navbar />
         {children}
       </body>
     </html>
