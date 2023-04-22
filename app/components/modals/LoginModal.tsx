@@ -7,6 +7,7 @@ import {
     FcGoogle
 } from 'react-icons/fc'
 
+import {signIn} from 'next-auth/react'
 import axios from "axios"
 import {
     useCallback,
@@ -19,22 +20,25 @@ import {
 } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
+import useLoginModal from '@/app/hooks/useLoginModal'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+
 import Modal from './Modal'
 import Heading from '../Heading'
 import Input from '../inputs/Input'
 import Button from '../Button'
-import useLoginModal from '@/app/hooks/useLoginModal'
+import { useRouter } from 'next/navigation'
 
-function RegisterModal() {
+function LoginModal() {
 
     const registerModal = useRegisterModal()
     const loginModal = useLoginModal()
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter()
 
-    const login = () => {
-        registerModal.onClose()
-        loginModal.onOpen()
+    const signup = () => {
+        loginModal.onClose()
+        registerModal.onOpen()
     }
 
     const {
@@ -45,7 +49,6 @@ function RegisterModal() {
         }
     } = useForm<FieldValues>({
         defaultValues: {
-            name: "",
             email: "",
             password: "",
         }
@@ -54,16 +57,23 @@ function RegisterModal() {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
 
-        axios.post('/api/register', data)
-            .then(() => {
-                registerModal.onClose();
-            })
-            .catch((error) => {
-                toast.error('Something went wrong')
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+        signIn('credentials', {
+            ...data,
+            redirect: false,
+        })
+        .then((callback)=> {
+            setIsLoading(false)
+
+            if(callback?.ok){
+                toast.success('Logged In!');
+                router.refresh();
+                loginModal.onClose()
+            }
+
+            if(callback?.error){
+                toast.error(callback.error);
+            }
+        })
     }
 
     const bodyContent = (
@@ -71,20 +81,12 @@ function RegisterModal() {
             className='flex flex-col gap-4'
         >
             <Heading
-                title='Welcome to Mercurybnb'
-                subtitle='Create an Account!'
+                title='Welcome Back'
+                subtitle='Login to your Account!'
             />
             <Input
                 id='email'
                 label='Email'
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
-            />
-            <Input
-                id='name'
-                label='Name'
                 disabled={isLoading}
                 register={register}
                 errors={errors}
@@ -126,13 +128,13 @@ function RegisterModal() {
                     className='flex flex-row items-center justify-center gap-2 '
                 >
                     <div>
-                        Already have an account?
+                        Don&apos;t have an account?
                     </div>
                     <div
-                        onClick={login}
+                        onClick={signup}
                         className='text-neutral-800 cursor-pointer hover:underline font-medium'
                     >
-                        Log in 
+                        Sign Up
                     </div>
 
                 </div>
@@ -143,10 +145,10 @@ function RegisterModal() {
     return (
         <Modal
             disabled={isLoading} //Disabled while loading so that user can't change anything during same time
-            isOpen={registerModal.isOpen}
-            title="Register"
+            isOpen={loginModal.isOpen}
+            title="Login"
             actionLabel='Continue'
-            onClose={registerModal.onClose}
+            onClose={loginModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
             footer={footerContent}
@@ -154,4 +156,4 @@ function RegisterModal() {
     )
 }
 
-export default RegisterModal
+export default LoginModal

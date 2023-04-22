@@ -7,10 +7,21 @@ import MenuItem from './MenuItem'
 import {
     AiOutlineMenu
 } from 'react-icons/ai'
-import useRegisterModal from '@/app/hooks/useRegisterModal'
 
-function UserMenu() {
+import useRegisterModal from '@/app/hooks/useRegisterModal'
+import useLoginModal from '@/app/hooks/useLoginModal'
+import { signOut } from 'next-auth/react'
+import { SafeUser } from '@/app/types'
+
+interface UserMenuProps {
+    currentUser?: SafeUser | null
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({
+    currentUser
+}) => {
     const registerModal = useRegisterModal()
+    const loginModal = useLoginModal()
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
@@ -48,18 +59,55 @@ function UserMenu() {
                     <div
                         className='flex flex-col cursor-pointer '
                     >
-                        <>
-                            <MenuItem
-                                onClick={registerModal.onOpen}
-                                label="Sign Up"
-                                style='font-bold'
-                            />
-                            <MenuItem
-                                onClick={() => { }}
-                                label="Log in"
-                                style=''
-                            />
-                        </>
+                        {currentUser ? (
+                            <>
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="My Trips"
+                                    style=''
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="My Favorites"
+                                    style=''
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="My Reservations"
+                                    style=''
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="My Properties"
+                                    style=''
+                                />
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label="Mercurybnb my Home"
+                                    style=''
+                                />
+                                <hr />
+                                <MenuItem
+                                    onClick={() => signOut()}
+                                    label="Log out"
+                                    style='font-bold'
+                                />
+                                
+                            </>
+                        ) : (
+                            <>
+                                <MenuItem
+                                    onClick={registerModal.onOpen}
+                                    label="Sign Up"
+                                    style='font-bold'
+                                />
+                                <MenuItem
+                                    onClick={loginModal.onOpen}
+                                    label="Log in"
+                                    style=''
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             )}
