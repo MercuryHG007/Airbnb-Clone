@@ -48,7 +48,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
                     <div
                         className='hidden md:block'
                     >
-                        <Avatar />
+                        <Avatar
+                            avatarSrc = {currentUser?.image}
+                        />
                     </div>
                 </div>
             </div>
@@ -61,6 +63,12 @@ const UserMenu: React.FC<UserMenuProps> = ({
                     >
                         {currentUser ? (
                             <>
+                                <MenuItem
+                                    onClick={() => {}}
+                                    label={`Hi! ${currentUser.name}`}
+                                    style='font-bold hover:bg-white cursor-default'
+                                />
+                                <hr />
                                 <MenuItem
                                     onClick={() => {}}
                                     label="My Trips"
