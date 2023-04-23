@@ -33,10 +33,10 @@ function RegisterModal() {
     const loginModal = useLoginModal()
     const [isLoading, setIsLoading] = useState(false);
 
-    const login = () => {
+    const login = useCallback(() => {
         registerModal.onClose()
         loginModal.onOpen()
-    }
+    }, [loginModal, registerModal])
 
     const {
         register,

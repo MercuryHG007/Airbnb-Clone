@@ -39,10 +39,10 @@ function LoginModal() {
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter()
 
-    const signup = () => {
+    const signup = useCallback(() => {
         loginModal.onClose()
         registerModal.onOpen()
-    }
+    }, [loginModal, registerModal])
 
     const {
         register,
