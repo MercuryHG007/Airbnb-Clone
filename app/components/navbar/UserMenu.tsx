@@ -10,6 +10,8 @@ import {
 
 import useRegisterModal from '@/app/hooks/useRegisterModal'
 import useLoginModal from '@/app/hooks/useLoginModal'
+import useRentModal from '@/app/hooks/useRentModal'
+
 import { signOut } from 'next-auth/react'
 import { SafeUser } from '@/app/types'
 
@@ -20,12 +22,26 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({
     currentUser
 }) => {
+    
     const registerModal = useRegisterModal()
     const loginModal = useLoginModal()
+    const rentModal = useRentModal()
+
     const [isOpen, setIsOpen] = useState(false);
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
     }, [])
+
+    const onRent = useCallback(() => {
+        // If no User, then open Login Modal
+        if (!currentUser){
+            return loginModal.onOpen()
+        }
+
+        // If User, then open Register Modal
+        rentModal.onOpen()
+
+    }, [currentUser, loginModal, rentModal])
 
     return (
         <div
@@ -35,7 +51,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                 className="flex flex-row items-center gap-3"
             >
                 <div
-                    onClick={() => { }}
+                    onClick={onRent}
                     className="lg:block hidden text-sm font-bold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer "
                 >
                     Mercurybnb your home
@@ -90,7 +106,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                     style=''
                                 />
                                 <MenuItem
-                                    onClick={() => {}}
+                                    onClick={rentModal.onOpen}
                                     label="Mercurybnb my Home"
                                     style=''
                                 />
