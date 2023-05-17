@@ -18,7 +18,7 @@ const Logo = () => {
                 src='/images/logo.png'
             />
             <p
-                className="hidden md:block text-rose-500 font-extrabold text-xl pt-1"
+                className="hidden md:block text-rose-500 font-bold text-xl pt-1"
             >
                 Mercurybnb
             </p>

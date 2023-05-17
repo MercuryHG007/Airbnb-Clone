@@ -52,7 +52,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             >
                 <div
                     onClick={onRent}
-                    className="lg:block hidden text-sm font-bold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer "
+                    className="lg:block hidden text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer "
                 >
                     Mercurybnb your home
                 </div>
