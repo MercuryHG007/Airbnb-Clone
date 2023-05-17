@@ -84,34 +84,29 @@ const UserMenu: React.FC<UserMenuProps> = ({
                             <>
                                 <MenuItem
                                     onClick={() => {}}
-                                    label={`Hi! ${currentUser.name}`}
+                                    label={`Hi, ${currentUser.name}`}
                                     style='font-bold hover:bg-white cursor-default'
                                 />
                                 <hr />
                                 <MenuItem
                                     onClick={() => router.push('/trips')}
                                     label="My Trips"
-                                    style=''
                                 />
                                 <MenuItem
                                     onClick={() => {}}
                                     label="My Favorites"
-                                    style=''
                                 />
                                 <MenuItem
-                                    onClick={() => {}}
+                                    onClick={() => router.push('/reservations')}
                                     label="My Reservations"
-                                    style=''
                                 />
                                 <MenuItem
                                     onClick={() => {}}
                                     label="My Properties"
-                                    style=''
                                 />
                                 <MenuItem
                                     onClick={rentModal.onOpen}
                                     label="Mercurybnb my Home"
-                                    style=''
                                 />
                                 <hr />
                                 <MenuItem
@@ -131,7 +126,6 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                 <MenuItem
                                     onClick={loginModal.onOpen}
                                     label="Log in"
-                                    style=''
                                 />
                             </>
                         )}
