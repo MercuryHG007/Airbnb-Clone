@@ -57,7 +57,9 @@ function RegisterModal() {
 
         axios.post('/api/register', data)
             .then(() => {
+                toast.success("Signed Up! Please Login")
                 registerModal.onClose();
+                loginModal.onOpen();
             })
             .catch((error) => {
                 toast.error('Something went wrong')
