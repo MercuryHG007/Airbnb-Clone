@@ -9,6 +9,7 @@ import Image from "next/image"
 import HeartButton from "../HeartButton"
 import Button from "../Button"
 import useCountries from "@/app/hooks/useCountries"
+import FormattedPrice from "../FormattedPrice"
 
 interface ListingCardProps {
     data: SafeListing
@@ -70,7 +71,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             onClick={() => router.push(`/listings/${data.id}`)}
         >
             <div
-                className="flex flex-col gap-2 w-full "
+                className="flex flex-col gap-2 w-full h-full"
             >
                 <div
                     className="aspect-square w-full relative overflow-hidden rounded-xl "
@@ -106,7 +107,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
                     <div
                         className="font-semibold"
                     >
-                        ₹ {price}
+                        ₹ <FormattedPrice value={price} />
                     </div>
                     {!reservation && (
                         <div
