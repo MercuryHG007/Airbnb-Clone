@@ -15,6 +15,7 @@ import useRentModal from '@/app/hooks/useRentModal'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { SafeUser } from '@/app/types'
+import { toast } from 'react-hot-toast'
 
 interface UserMenuProps {
     currentUser?: SafeUser | null
@@ -110,7 +111,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                 />
                                 <hr />
                                 <MenuItem
-                                    onClick={() => signOut()}
+                                    onClick={() => {
+                                        signOut()
+                                        toast.success('Logged Out!')
+                                    }}
                                     label="Log out"
                                     style='font-bold'
                                 />
