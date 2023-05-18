@@ -38,7 +38,7 @@ const Search = () => {
                 diff = 1;
             }
 
-            return `${diff} Days`;
+            return `${diff} ${diff > 1 ? 'Days' : 'Day'}`;
         }
 
         return 'Any Week'
